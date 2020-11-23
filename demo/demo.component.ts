@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CurrencyMaskInputMode } from '../src/currency-mask.config';
 
@@ -14,7 +14,6 @@ import { CurrencyMaskInputMode } from '../src/currency-mask.config';
             class="form-control"
             currencyMask
             formControlName="value"
-            [placeholder]="'R$ 0,00'"
             [options]="ngxCurrencyOptions"
           />
         </div>
@@ -49,16 +48,16 @@ import { CurrencyMaskInputMode } from '../src/currency-mask.config';
     </form>
   `
 })
-export class DemoComponent {
+export class DemoComponent implements OnInit {
 
   @ViewChild('valueInput', { static: true }) valueInput: ElementRef;
 
   public form: FormGroup;
   public ngxCurrencyOptions = {
-    prefix: 'R$ ',
+    prefix: '',
     thousands: '.',
     decimal: ',',
-    allowNegative: false,
+    allowNegative: true,
     nullable: true,
     max: 250_000_000,
     inputMode: CurrencyMaskInputMode.FINANCIAL,
@@ -69,7 +68,7 @@ export class DemoComponent {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      value: null,
+      value: 0,
       inputMode: this.ngxCurrencyOptions.inputMode,
     });
 
@@ -77,7 +76,7 @@ export class DemoComponent {
       this.ngxCurrencyOptions.inputMode = val;
 
       // Clear and focus the value input when the input mode is changed.container
-      this.form.get('value').setValue(null);
+      this.form.get('value').setValue(0);
       this.valueInput.nativeElement.focus();
     });
 
