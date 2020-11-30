@@ -55,12 +55,12 @@ export class DemoComponent implements OnInit {
   public form: FormGroup;
   public ngxCurrencyOptions = {
     prefix: '',
-    thousands: '.',
+    thousands: '',
     decimal: ',',
     allowNegative: true,
     nullable: true,
     max: 250_000_000,
-    inputMode: CurrencyMaskInputMode.FINANCIAL,
+    inputMode: CurrencyMaskInputMode.NATURAL
   };
 
   constructor(private formBuilder: FormBuilder) {
